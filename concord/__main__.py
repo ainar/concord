@@ -104,9 +104,7 @@ def main():
 
     window = webview.create_window(
         'Concord',
-        'C:\\Users\\ainar.DESKTOP-Q82NSUJ\\python\\concord\\concord\\ui\\index.html',
-        # 'https://google.com',
-        # "https://www.whatsmyua.info/",
+        'ui/index.html',
         text_select=True,
         js_api=js_api
     )
