@@ -147,11 +147,22 @@ window.addEventListener("resize", function () {
 })
 
 let initialized = false;
+let loaded = false;
+let pywebviewready = false;
+
+window.addEventListener('load', function () {
+    loaded = true;
+    triggerInit();
+});
 
 window.addEventListener('pywebviewready', function () {
-    console.log('webview ready')
-    if (!initialized) {
+    pywebviewready = true;
+    triggerInit();
+});
+
+function triggerInit() {
+    if (!initialized && loaded && pywebviewready) {
         init();
         initialized = true;
     }
-})
+}
