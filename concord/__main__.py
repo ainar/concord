@@ -93,14 +93,18 @@ class JSAPI:
     def get_channels(self, guild_id):
         guild = self._client.get_guild(int(guild_id))
         channels = []
+        categories = []
         for channel in guild.channels:
 
             if isinstance(channel, discord.TextChannel):
                 channels.append(channel)
             elif isinstance(channel, discord.CategoryChannel):
-                self.add_category(channel)
+                categories.append(channel)
 
-        for channel in channels:
+        for category in sorted(categories, key=lambda category: category.position):
+            self.add_category(category)
+
+        for channel in sorted(channels, key=lambda channel: channel.position):
             member = guild.get_member(self._client.user.id)
             read_messages_permission = True
             try:
