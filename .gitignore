@@ -1,0 +1,6 @@
+dist
+__pycache__
+build
+*.spec
+3.7
+concord/config.py
