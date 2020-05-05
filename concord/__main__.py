@@ -41,24 +41,55 @@ class JSAPI:
             self._window.evaluate_js(js)
 
     def add_message(self, message):
-        js = "addMessage({0}, {1}, {2}, {3});".format(
-            json.dumps(str(message.id)),
-            json.dumps(message.author.name),
-            json.dumps(message.content),
-            message.created_at.timestamp()
+        message = {
+            'id': str(message.id),
+            'author_name': message.author.name,
+            'content': message.content,
+            'created_at': message.created_at.timestamp()
+        }
+
+        js = "addMessage({0});".format(
+            json.dumps(message)
+        )
+        self._window.evaluate_js(js)
+
+    def add_channel(self, channel):
+        channel = {
+            'id': str(channel.id),
+            'name': channel.name,
+            'category_id': str(
+            channel.category_id) if channel.category_id is not None else None
+        }
+
+        js = "addChannel({0});".format(
+            json.dumps(channel)
+        )
+        self._window.evaluate_js(js)
+
+    def add_category(self, channel):
+        channel = {
+            'id': str(channel.id),
+            'name': channel.name
+        }
+
+        js = "addCategory({0});".format(
+            json.dumps(channel),
         )
         self._window.evaluate_js(js)
 
     def get_channels(self, guild_id):
-        for guild in self._client.guilds:
-            if str(guild.id) == guild_id:
-                for channel in guild.channels:
-                    js = "addChannel({0}, {1});".format(
-                        json.dumps(str(channel.id)),
-                        json.dumps(channel.name)
-                    )
-                    self._window.evaluate_js(js)
-                return
+        guild = self._client.get_guild(int(guild_id))
+        channels = []
+        for channel in guild.channels:
+
+            if isinstance(channel, discord.TextChannel):
+                channels.append(channel)
+            elif isinstance(channel, discord.CategoryChannel):
+                self.add_category(channel)
+
+        for channel in channels:
+            self.add_channel(channel)
+
         raise Exception('no guild found with id ' + guild_id)
         print("no channel found")
 

@@ -18,7 +18,12 @@ function scrollMessagesToEnd() {
     messageList.scrollTo(0, messageList.scrollHeight);
 }
 
-function addMessage(message_id, author, content, time) {
+function addMessage(message) {
+    const message_id = message.id;
+    const author = message.author_name;
+    const content = message.content;
+    const time = message.created_at;
+
     const messageElement = document.createElement("div");
     const messageMetaElement = document.createElement("div");
     const messageAuthorElement = document.createElement("div");
@@ -72,15 +77,40 @@ function addGuild(guild_id, guild_name) {
     tabbarList.appendChild(listItem)
 }
 
-function addChannel(channelId, channelName) {
+function addChannel(channel) {
+    const channelId = channel.id;
+    const channelName = channel.name;
+    const categoryId = channel.category_id;
+
     const listItem = document.createElement("a");
-    listItem.setAttribute("class", "sidebar_list_item")
-    listItem.setAttribute("href", "#")
-    listItem.innerHTML = channelName
+    listItem.setAttribute("class", "sidebar_list_item");
+    listItem.setAttribute("href", "#");
+    listItem.innerHTML = channelName;
+
     listItem.addEventListener("click", function () {
-        return showMessages(channelId)
-    })
-    sidebarList.appendChild(listItem)
+        return showMessages(channelId);
+    });
+
+    if (categoryId) {
+        document.getElementById(categoryId).appendChild(listItem);
+    } else {
+        sidebarList.appendChild(listItem);
+    }
+}
+
+function addCategory(channel) {
+    const channelId = channel.id
+    const channelName = channel.name
+
+    const listParentItem = document.createElement("div");
+    const listParentItemName = document.createElement("div");
+
+    listParentItem.setAttribute("class", "sidebar_list_parent-item");
+    listParentItem.setAttribute("id", channelId);
+    listParentItemName.innerHTML = channelName;
+
+    listParentItem.appendChild(listParentItemName);
+    sidebarList.appendChild(listParentItem);
 }
 
 function showChannels(guild_id) {
@@ -109,10 +139,10 @@ messageList.addEventListener("scroll", function () {
 })
 
 window.addEventListener("resize", function () {
-    messageList.scrollTo(0, scrollPercentage * messageList.scrollHeight / 100);
-
     if (areMessagesAtEnd) {
         scrollMessagesToEnd()
+    } else {
+        messageList.scrollTo(0, scrollPercentage * messageList.scrollHeight / 100);
     }
 })
 

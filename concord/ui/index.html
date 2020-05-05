@@ -2,182 +2,14 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="element-scroll-polyfill.js"></script>
     <script src="moment-with-locales.min.js"></script>
     <script src="marked.min.js"></script>
     <script src="purify.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
-    <style>
-        * {
-            box-sizing: border-box;
-            user-select: none;
-            -ms-user-select: none;
-        }
-
-        html,
-        body {
-            height: 100%;
-            padding: 0;
-            margin: 0;
-            -webkit-app-region: drag;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-        }
-
-        #reload-button {
-            position: absolute;
-            display: block;
-            padding: 10px;
-            top: 0;
-            right: 0;
-        }
-
-        #reload-button:link {
-            text-decoration: none;
-            color: black;
-        }
-
-        #tabbar {
-            z-index: 200;
-            position: relative;
-            float: left;
-            background-color: white;
-            height: 39px;
-        }
-
-        .tabbar_list_item {
-            display: block;
-            padding: 10px;
-            float: left;
-            text-decoration: none;
-            transition: .1s text-shadow;
-        }
-
-        .tabbar_list_item:hover {
-            text-shadow: 0 0 2px black;
-        }
-
-        .tabbar_list_item:link {
-            color: black
-        }
-
-        .tabbar_list_item:visited {
-            color: black
-        }
-
-        #main-content {
-            clear: both;
-            height: calc(100% - 39px);
-        }
-
-        #sidebar {
-            background-color: rgba(197, 197, 197, 0.961);
-            height: calc(100% - 39px);
-            -webkit-app-region: drag;
-            box-shadow: 5px 0 5px rgba(0, 0, 0, .1);
-            overflow-x: hidden;
-            transition: 0.2s width;
-            z-index: 100;
-            position: absolute;
-            width: 40px;
-        }
-
-        #sidebar:hover {
-            width: 200px;
-        }
-
-        #sidebar_list {
-            width: 200px;
-        }
-
-        .sidebar_list_item {
-            display: block;
-            padding: 10px 20px 10px 10px;
-            user-select: none;
-            transition: .1s background-color;
-        }
-
-        .sidebar_list_item:link,
-        .sidebar_list_item:visited {
-            text-decoration: none;
-            color: black;
-        }
-
-        .sidebar_list_item:hover {
-            background-color: rgba(0, 0, 0, .1);
-        }
-
-        #message-panel {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            height: 100%;
-            margin-left: 40px;
-        }
-
-        #message-list {
-            padding: 0;
-            overflow-y: auto;
-            flex: 1;
-        }
-
-        #message-list * {
-            user-select: text;
-            -ms-user-select: text;
-        }
-
-        .message {
-            padding: 10px 20px 10px 10px;
-        }
-
-        .message p:last-of-type {
-            margin-bottom: 0;
-        }
-
-        .message:hover {
-            background-color: rgba(151, 217, 255, 0.123);
-        }
-
-        .message_meta {
-            margin-bottom: 25px;
-        }
-
-        .message_author {
-            font-weight: bold;
-            float: left;
-        }
-
-        .message_time {
-            font-style: italic;
-            float: left;
-            margin-left: 10px;
-        }
-
-        .message_content {
-            clear: both;
-        }
-
-        #message-input {
-            width: 100%;
-            height: 100px;
-            margin: 0;
-            padding: 10px;
-            border: none;
-            background-color: rgba(0, 0, 0, .1);
-            resize: none;
-        }
-
-        #message-input:focus {
-            outline: none;
-            background-color: rgba(0, 0, 0, 0.05);
-        }
-
-        #message-input {
-            user-select: text;
-            -ms-user-select: text;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css" />
     <title>Concord</title>
 </head>
 
@@ -186,45 +18,30 @@
         Reload
     </a>
     <header id="tabbar">
-        <div id="tabbar_list"></div>
+        <div id="tabbar_list">
+        </div>
     </header>
     <div id="main-content">
         <aside id="sidebar">
-            <div id="sidebar_list"></div>
+            <div id="sidebar_list">
+                <div class="tabbar_list_parent-item" href="#">
+                    <div>coucou</div>
+                    <a class="tabbar_list_item" href="#">
+                        coucou
+                    </a>
+                </div>
+            </div>
         </aside>
         <div id="message-panel">
             <div id="message-list">
-                <div class="message">
-                    <div class="message_meta">
-                        <div class="message_author">Aina</div>
-                        <div class="message_time">Aujourd’hui à 21:58</div>
-                    </div>
-                    <div class="message_content">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas aliquam, risus vitae
-                        laoreet
-                        venenatis, tellus nisi condimentum arcu, sed tristique massa lorem ut urna. Morbi et ligula
-                        ut
-                        urna
-                        sodales porta. Ut at faucibus ligula. Nulla non libero luctus, consectetur tortor in,
-                        placerat
-                        urna.
-                        Quisque placerat libero vel efficitur rutrum. Duis ipsum orci, pellentesque cursus elementum
-                        aliquet, congue eget massa. Sed consequat ultrices dui, et pretium sem. Quisque hendrerit
-                        eros
-                        nec
-                        mattis ultricies. Integer vel tincidunt turpis. Donec interdum eleifend magna nec sodales.
-                        Vestibulum ac augue at enim tempus tempor sed a velit. Sed at nunc id felis venenatis
-                        aliquam.
-                        Nulla
-                        eget finibus ante, nec porttitor purus.
-                    </div>
+                <div id="welcome-message">
+                    Sélectionnez un serveur ci-dessus et un canal ci-contre pour afficher les messages.
                 </div>
             </div>
             <textarea id="message-input"></textarea>
         </div>
-    </div>
 
-    <script src="script.js"></script>
+        <script src="script.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,176 @@
+* {
+    box-sizing: border-box;
+    user-select: none;
+    -ms-user-select: none;
+}
+
+html,
+body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    -webkit-app-region: drag;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+#reload-button {
+    position: absolute;
+    display: block;
+    padding: 10px;
+    top: 0;
+    right: 0;
+}
+
+#reload-button:link {
+    text-decoration: none;
+    color: black;
+}
+
+#tabbar {
+    z-index: 200;
+    position: relative;
+    float: left;
+    background-color: white;
+    height: 39px;
+}
+
+.tabbar_list_parent-item {
+    padding: 10px;
+}
+
+.tabbar_list_item {
+    display: block;
+    padding: 10px;
+    float: left;
+    text-decoration: none;
+    transition: .1s text-shadow;
+}
+
+.tabbar_list_item:hover {
+    text-shadow: 0 0 2px black;
+}
+
+.tabbar_list_item:link {
+    color: black
+}
+
+.tabbar_list_item:visited {
+    color: black
+}
+
+#main-content {
+    clear: both;
+    height: calc(100% - 39px);
+}
+
+#sidebar {
+    background-color: rgba(197, 197, 197, 0.961);
+    height: calc(100% - 39px);
+    -webkit-app-region: drag;
+    box-shadow: 5px 0 5px rgba(0, 0, 0, .1);
+    overflow-x: hidden;
+    transition: 0.2s width;
+    z-index: 100;
+    position: absolute;
+    width: 40px;
+}
+
+#sidebar:hover {
+    width: 200px;
+}
+
+#sidebar_list {
+    width: 200px;
+}
+
+.sidebar_list_item {
+    display: block;
+    padding: 10px 20px 10px 10px;
+    user-select: none;
+    transition: .1s background-color;
+}
+
+.sidebar_list_item:link,
+.sidebar_list_item:visited {
+    text-decoration: none;
+    color: black;
+}
+
+.sidebar_list_item:hover {
+    background-color: rgba(0, 0, 0, .1);
+}
+
+#message-panel {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
+    margin-left: 40px;
+}
+
+#message-list {
+    padding: 0;
+    overflow-y: auto;
+    flex: 1;
+}
+
+#message-list * {
+    user-select: text;
+    -ms-user-select: text;
+}
+
+.message {
+    padding: 10px 20px 10px 10px;
+}
+
+.message p:last-of-type {
+    margin-bottom: 0;
+}
+
+.message:hover {
+    background-color: rgba(151, 217, 255, 0.123);
+}
+
+.message_meta {
+    margin-bottom: 25px;
+}
+
+.message_author {
+    font-weight: bold;
+    float: left;
+}
+
+.message_time {
+    font-style: italic;
+    float: left;
+    margin-left: 10px;
+}
+
+.message_content {
+    clear: both;
+}
+
+#message-input {
+    width: 100%;
+    height: 100px;
+    margin: 0;
+    padding: 10px;
+    border: none;
+    background-color: rgba(0, 0, 0, .1);
+    resize: none;
+}
+
+#message-input:focus {
+    outline: none;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+#message-input {
+    user-select: text;
+    -ms-user-select: text;
+}
+
+#welcome-message {
+    font-size: 30px;
+    margin: 20px;
+}
