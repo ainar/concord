@@ -22,8 +22,7 @@ class ConcordClient(discord.Client):
         print('Logged on as {0}!'.format(self.user))
 
     async def on_message(self, message):
-        print(self._api.active_channel, str(message.channel.id))
-        if self._api.active_channel == str(message.channel.id):
+        if self._api.active_channel == message.channel:
             self._api.add_message(message)
 
     def attach_api(self, api):
@@ -88,7 +87,7 @@ class JSAPI:
         return self._active_channel
 
     def set_active_channel(self, channel_id):
-        self._active_channel = channel_id
+        self._active_channel = self._client.get_channel(int(channel_id))
 
     def get_channels(self, guild_id):
         guild = self._client.get_guild(int(guild_id))
@@ -109,8 +108,15 @@ class JSAPI:
     def get_messages(self, channel_id):
         channel = self._client.get_channel(int(channel_id))
         try:
-            messages_future = asyncio.run_coroutine_threadsafe(
+            asyncio.run_coroutine_threadsafe(
                 self.get_messages_coro(channel), self._client.loop)
+        except Exception as err:
+            print('exception:', err)
+
+    def send_message(self, content):
+        try:
+            asyncio.run_coroutine_threadsafe(
+                self._active_channel.send(content), self._client.loop)
         except Exception as err:
             print('exception:', err)
 
@@ -120,8 +126,6 @@ class JSAPI:
     def attach_window(self, window):
         self._window = window
 
-    def log(self, message):
-        print(message)
 
     async def get_messages_coro(self, channel):
         try:

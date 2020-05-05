@@ -153,6 +153,22 @@ document.getElementById('reload-button').addEventListener('click', function() {
     document.location.reload(true);
 });
 
+const messageInput = document.getElementById('message-input');
+
+messageInput.addEventListener('keypress', function (event) {
+    if (event.which == 13 || event.keyCode == 13) {
+        event.preventDefault();
+        sendMessage(messageInput.textContent);
+        messageInput.textContent = "";
+        return false;
+    }
+    return true;
+});
+
+function sendMessage(content) {
+    pywebview.api.send_message(content);
+}
+
 function init() {
     showGuilds();
 }
