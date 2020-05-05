@@ -78,16 +78,21 @@ function addChannel(channel) {
     const channelId = channel.id;
     const channelName = channel.name;
     const categoryId = channel.category_id;
+    const readMessagesPermission = channel.read_messages_permission
 
     const listItem = document.createElement("a");
-    listItem.setAttribute("class", "sidebar_list_item");
+    listItem.classList.add("sidebar_list_item");
     listItem.setAttribute("href", "#");
     listItem.innerHTML = channelName;
 
-    listItem.addEventListener("click", function () {
-        setActiveChannel(channelId);
-        showMessages(channelId);
-    });
+    if (readMessagesPermission) {
+        listItem.addEventListener("click", function () {
+            setActiveChannel(channelId);
+            showMessages(channelId);
+        });
+    } else {
+        listItem.classList.add("deactivated")
+    }
 
     if (categoryId) {
         document.getElementById(categoryId).appendChild(listItem);
@@ -149,7 +154,7 @@ window.addEventListener("resize", function () {
     }
 })
 
-document.getElementById('reload-button').addEventListener('click', function() {
+document.getElementById('reload-button').addEventListener('click', function () {
     window.location.href += "#reload";
     document.location.reload(true);
 });

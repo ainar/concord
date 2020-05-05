@@ -58,12 +58,13 @@ class JSAPI:
         )
         self._window.evaluate_js(js)
 
-    def add_channel(self, channel):
+    def add_channel(self, channel, read_messages_permission):
         channel = {
             'id': str(channel.id),
             'name': channel.name,
             'category_id': str(
-                channel.category_id) if channel.category_id is not None else None
+                channel.category_id) if channel.category_id is not None else None,
+            'read_messages_permission': read_messages_permission
         }
 
         js = "addChannel({0});".format(
@@ -100,7 +101,14 @@ class JSAPI:
                 self.add_category(channel)
 
         for channel in channels:
-            self.add_channel(channel)
+            member = guild.get_member(self._client.user.id)
+            read_messages_permission = True
+            try:
+                read_messages_permission = channel.permissions_for(
+                    member).read_messages
+            except Exception as err:
+                print('error while retrieving permissions:', err)
+            self.add_channel(channel, read_messages_permission)
 
         raise Exception('no guild found with id ' + guild_id)
         print("no channel found")
@@ -125,7 +133,6 @@ class JSAPI:
 
     def attach_window(self, window):
         self._window = window
-
 
     async def get_messages_coro(self, channel):
         try:

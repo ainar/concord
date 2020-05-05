@@ -72,14 +72,15 @@ body {
 }
 
 #sidebar:hover {
-    width: 200px;
+    width: 300px;
 }
 
 #sidebar_list {
-    width: 200px;
+    width: 300px;
 }
 
 .sidebar_list_parent-item_title {
+    margin-top: 20px;
     padding: 10px;
     text-transform: uppercase;
 }
@@ -103,6 +104,10 @@ body {
 
 .sidebar_list_item:hover {
     background-color: rgba(0, 0, 0, .1);
+}
+
+.sidebar_list_item.deactivated {
+    color: rgba(0, 0, 0, .5);
 }
 
 #message-panel {
