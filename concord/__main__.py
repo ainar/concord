@@ -89,6 +89,8 @@ class JSAPI:
 
     def set_active_channel(self, channel_id):
         self._active_channel = self._client.get_channel(int(channel_id))
+        self._window.set_title("#" + self._active_channel.name +
+                               " – " + self._active_channel.guild.name + " – Concord")
 
     def get_channels(self, guild_id):
         guild = self._client.get_guild(int(guild_id))
