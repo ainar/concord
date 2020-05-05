@@ -22,7 +22,9 @@ class ConcordClient(discord.Client):
         print('Logged on as {0}!'.format(self.user))
 
     async def on_message(self, message):
-        self._api.add_message(message)
+        print(self._api.active_channel, str(message.channel.id))
+        if self._api.active_channel == str(message.channel.id):
+            self._api.add_message(message)
 
     def attach_api(self, api):
         self._api = api
@@ -33,6 +35,7 @@ class JSAPI:
     def __init__(self):
         self._client = None
         self._window = None
+        self._active_channel = None
 
     def get_guilds(self):
         for guild in self._client.guilds:
@@ -47,7 +50,8 @@ class JSAPI:
             'id': str(message.id),
             'author_name': message.author.name,
             'content': message.content,
-            'created_at': message.created_at.timestamp()
+            'created_at': message.created_at.timestamp(),
+            'channel_id': str(message.channel.id)
         }
 
         js = "addMessage({0});".format(
@@ -60,7 +64,7 @@ class JSAPI:
             'id': str(channel.id),
             'name': channel.name,
             'category_id': str(
-            channel.category_id) if channel.category_id is not None else None
+                channel.category_id) if channel.category_id is not None else None
         }
 
         js = "addChannel({0});".format(
@@ -78,6 +82,13 @@ class JSAPI:
             json.dumps(channel),
         )
         self._window.evaluate_js(js)
+
+    @property
+    def active_channel(self):
+        return self._active_channel
+
+    def set_active_channel(self, channel_id):
+        self._active_channel = channel_id
 
     def get_channels(self, guild_id):
         guild = self._client.get_guild(int(guild_id))

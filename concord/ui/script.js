@@ -23,6 +23,7 @@ function addMessage(message) {
     const author = message.author_name;
     const content = message.content;
     const time = message.created_at;
+    const channel_id = message.channel_id;
 
     const messageElement = document.createElement("div");
     const messageMetaElement = document.createElement("div");
@@ -84,7 +85,8 @@ function addChannel(channel) {
     listItem.innerHTML = channelName;
 
     listItem.addEventListener("click", function () {
-        return showMessages(channelId);
+        setActiveChannel(channelId);
+        showMessages(channelId);
     });
 
     if (categoryId) {
@@ -112,6 +114,10 @@ function addCategory(channel) {
 function showChannels(guild_id) {
     sidebarList.textContent = ""
     pywebview.api.get_channels(guild_id)
+}
+
+function setActiveChannel(channel_id) {
+    pywebview.api.set_active_channel(channel_id)
 }
 
 function showGuilds() {
