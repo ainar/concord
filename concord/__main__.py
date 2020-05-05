@@ -5,7 +5,6 @@ import sys
 from threading import Thread
 import json
 import asyncio
-from asgiref.sync import async_to_sync
 import functools
 
 from .config import SECRET_TOKEN
