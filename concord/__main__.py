@@ -17,6 +17,8 @@ class ConcordClient(discord.Client):
         self._api = None
 
     async def on_ready(self):
+        js = 'discordReadyHandler();'
+        self._window.evaluate_js(js)
         print('Logged on as {0}!'.format(self.user))
 
     async def on_message(self, message):

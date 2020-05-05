@@ -62,10 +62,6 @@ function addMessage(message) {
     }
 }
 
-function init() {
-    showGuilds();
-}
-
 function addGuild(guild_id, guild_name) {
     const listItem = document.createElement("a");
     listItem.setAttribute("class", "tabbar_list_item")
@@ -119,8 +115,8 @@ function showChannels(guild_id) {
 }
 
 function showGuilds() {
-    tabbarList.textContent = ""
-    pywebview.api.get_guilds()
+    tabbarList.textContent = "";
+    pywebview.api.get_guilds();
 }
 
 async function showMessages(channel_id) {
@@ -146,9 +142,23 @@ window.addEventListener("resize", function () {
     }
 })
 
+document.getElementById('reload-button').addEventListener('click', function() {
+    window.location.href += "#reload";
+    document.location.reload(true);
+});
+
+function init() {
+    showGuilds();
+}
+
 let initialized = false;
 let loaded = false;
 let pywebviewready = false;
+let discordReady = false;
+
+if (location.hash === '#reload') {
+    discordReady = true;
+}
 
 window.addEventListener('load', function () {
     loaded = true;
@@ -160,8 +170,13 @@ window.addEventListener('pywebviewready', function () {
     triggerInit();
 });
 
+function discordReadyHandler() {
+    discordReady = true;
+    triggerInit();
+}
+
 function triggerInit() {
-    if (!initialized && loaded && pywebviewready) {
+    if (!initialized && loaded && pywebviewready && discordReady) {
         init();
         initialized = true;
     }
