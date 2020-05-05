@@ -34,10 +34,6 @@ body {
     height: 39px;
 }
 
-.tabbar_list_parent-item {
-    padding: 10px;
-}
-
 .tabbar_list_item {
     display: block;
     padding: 10px;
@@ -83,11 +79,19 @@ body {
     width: 200px;
 }
 
+.sidebar_list_parent-item {
+    padding: 10px;
+}
+
 .sidebar_list_item {
     display: block;
     padding: 10px 20px 10px 10px;
     user-select: none;
     transition: .1s background-color;
+}
+
+.sidebar_list_item::before {
+    content: '#';
 }
 
 .sidebar_list_item:link,
