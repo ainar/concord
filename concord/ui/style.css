@@ -79,8 +79,9 @@ body {
     width: 200px;
 }
 
-.sidebar_list_parent-item {
+.sidebar_list_parent-item_title {
     padding: 10px;
+    text-transform: uppercase;
 }
 
 .sidebar_list_item {

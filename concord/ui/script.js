@@ -102,6 +102,7 @@ function addCategory(channel) {
 
     const listParentItem = document.createElement("div");
     const listParentItemName = document.createElement("div");
+    listParentItemName.setAttribute("class", "sidebar_list_parent-item_title");
 
     listParentItem.setAttribute("class", "sidebar_list_parent-item");
     listParentItem.setAttribute("id", channelId);
