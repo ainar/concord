@@ -4,3 +4,4 @@ build
 *.spec
 3.7
 concord/config.py
+.vscode
